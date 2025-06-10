@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ArtemisGSI.h"
 #include <optional>
+#include <string>
 
 constexpr auto WEBSERVER_FILE_PATH = "C:\\ProgramData\\Artemis\\webserver.txt";
 constexpr auto ARTEMIS_PLUGIN_GUID = "945dc0aa-7ee3-47ec-9be6-f378fb7cb7b0";
@@ -91,7 +92,7 @@ void ArtemisGSI::SendToArtemis(const char* endpoint, const char* data) {
 		cvarManager->log("Error sending data to Artemis, stopping...");
 		cvarManager->executeCommand("sleep 0; plugin unload artemisgsi");
 	}else{
-		cvarManager->log("data sent...");
+		cvarManager->log("data sent with result " + std::string(response->status) + ": " + response->reason);
 	}
 }
 
