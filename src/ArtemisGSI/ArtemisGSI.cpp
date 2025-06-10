@@ -92,7 +92,7 @@ void ArtemisGSI::SendToArtemis(const char* endpoint, const char* data) {
 		cvarManager->log("Error sending data to Artemis, stopping...");
 		cvarManager->executeCommand("sleep 0; plugin unload artemisgsi");
 	}else{
-		cvarManager->log("data sent with result " + std::string(response->status) + ": " + response->reason);
+		cvarManager->log("data sent with result " + std::to_string(response->status) + ": " + response->reason);
 	}
 }
 
