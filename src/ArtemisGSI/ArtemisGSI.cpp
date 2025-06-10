@@ -24,20 +24,6 @@ void ArtemisGSI::onLoad()
 	artemisClient = std::make_unique<httplib::Client>(endpoint.data());
 	artemisClient->set_connection_timeout(0, 50000);
 
-	auto testRequest = artemisClient->Get(PLUGINLIST_ENDPOINT);
-	if (!testRequest)
-	{
-		cvarManager->log("Test request failed, Artemis not running.");
-		cvarManager->executeCommand("sleep 0; plugin unload artemisgsi");
-		return;
-	}
-	if (testRequest.value().body.find(ARTEMIS_PLUGIN_GUID) == std::string::npos)
-	{
-		cvarManager->log("Test request failed, Artemis does not have the required plugin loaded.");
-		cvarManager->executeCommand("sleep 0; plugin unload artemisgsi");
-		return;
-	}
-
 	canSendUpdates = true;
 	std::thread t(&ArtemisGSI::StartLoop, this);
 	t.detach();
